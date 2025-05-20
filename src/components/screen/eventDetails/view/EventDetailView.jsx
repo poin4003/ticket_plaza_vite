@@ -48,13 +48,12 @@ function EventDetails() {
     <div>
       <div className="bg-gray-800 text-white relative">
         {event.media && event.media.length > 0 ? (
-          <div className="relative h-64 md:h-96">
+          <div className="relative h-64 md:h-96 bg-black opacity-30">
             <img 
-              src={`https://source.unsplash.com/random/1600x900/?concert&sig=${event.id}`}
+              src={event?.media?.[0]}
               alt={event.eventName}
               className="w-full h-full object-cover opacity-60"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>
         ) : (
           <div className="h-48 md:h-64 bg-primary-900"></div>

@@ -10,27 +10,27 @@ const useHomeViewModel = () => {
   const [totalPages, setTotalPages] = useState(0);
   const limit = 6;
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      setLoading(true);
-      try {
-        const response = await EventRepo.getEvents(page, limit, searchTerm);
-        setEvents(response.data.content);
-        setTotalPages(response.data.totalPages);
-      } catch (err) {
-        console.error('Error fetching events:', err);
-        setError('Failed to load events. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchEvents = async () => {
+    setLoading(true);
+    try {
+      const response = await EventRepo.getEvents(page, limit, searchTerm);
+      setEvents(response.data.content);
+      setTotalPages(response.data.totalPages);
+    } catch (err) {
+      console.error('Error fetching events:', err);
+      setError('Failed to load events. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchEvents();
-  }, [page, searchTerm]);
+  }, [page]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setPage(0);
+    fetchEvents();
   };
 
   const clearSearch = () => {

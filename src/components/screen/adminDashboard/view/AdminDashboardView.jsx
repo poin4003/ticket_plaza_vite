@@ -25,6 +25,8 @@ function AdminDashboard() {
     confirmDelete,
     handleDelete,
     clearFilters,
+    setEndDate,
+    setStartDate
   } = useAdminDashboardViewModel();
 
   return (
@@ -73,11 +75,11 @@ function AdminDashboard() {
           <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="form-label">Start Date</label>
-              <input type="date" className="form-input" />
+              <input type="date" className="form-input" onChange={(e) => setStartDate(dayjs(e?.target?.value).format('YYYY-MM-DDTHH:mm:ss'))} />
             </div>
             <div>
               <label className="form-label">End Date</label>
-              <input type="date" className="form-input" />
+              <input type="date" className="form-input" onChange={(e) => setEndDate(dayjs(e?.target?.value).format('YYYY-MM-DDTHH:mm:ss'))} />
             </div>
             <div className="flex items-end">
               <button
@@ -162,7 +164,7 @@ function AdminDashboard() {
                         <div className="h-10 w-10 flex-shrink-0 bg-gray-300 rounded-md overflow-hidden">
                           {event.media && event.media.length > 0 ? (
                             <img
-                              src={`https://source.unsplash.com/random/100x100/?concert&sig=${event.id}`}
+                              src={event?.media?.[0]}
                               alt=""
                               className="h-10 w-10 object-cover"
                             />
@@ -215,7 +217,7 @@ function AdminDashboard() {
                           title="Delete Event"
                         >
                           Delete
-                        </button> 
+                        </button>
                       </div>
                     </td>
                   </tr>

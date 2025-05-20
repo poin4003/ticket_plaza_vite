@@ -13,17 +13,20 @@ const useAdminDashboardViewModel = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [eventToDelete, setEventToDelete] = useState(null)
   const limit = 10
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+  const [clearFilter, setClearFilter] = useState(false)
 
   useEffect(() => {
     fetchEvents()
-  }, [page])
+  }, [page, startDate, endDate, clearFilter])
 
   const fetchEvents = async () => {
     setLoading(true)
     try {
-      const response = await EventRepo.getEvents(page, limit, searchTerm)
+      const response = await EventRepo.getEvents(page, limit, searchTerm, startDate, endDate)
       setEvents(response.data.content)
-      setTotalPages(response.totalPages)
+      setTotalPages(response.data.totalPages)
     } catch (err) {
       console.error('Error fetching events: ', err)
       setError('Failed to load events. Please try again later.')
@@ -62,8 +65,10 @@ const useAdminDashboardViewModel = () => {
 
   const clearFilters = () => {
     setSearchTerm('')
+    setStartDate(null)
+    setEndDate(null)
     setShowFilters(false)
-    fetchEvents()
+    setClearFilter((prev) => !prev)
   }
 
   return {
@@ -84,6 +89,8 @@ const useAdminDashboardViewModel = () => {
     confirmDelete,
     handleDelete,
     clearFilters,
+    setStartDate,
+    setEndDate
   }
 }
 

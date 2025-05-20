@@ -12,8 +12,8 @@ function EventCard({ event }) {
     <Link to={`/events/${event.id}`} className="card group">
       <div className="aspect-w-16 aspect-h-9 w-full overflow-hidden bg-gray-200">
         {event.media && event.media.length > 0 ? (
-          <img 
-            src={`https://source.unsplash.com/random/800x450/?concert&sig=${event.id}`} 
+          <img
+            src={event?.media?.[0]}
             alt={event.eventName}
             className="w-full h-48 object-cover object-center group-hover:scale-105 transition-transform duration-300"
           />
@@ -71,8 +71,8 @@ function EventView() {
             <p className="text-lg md:text-xl opacity-90 mb-8">
               Find the hottest concerts, shows, and experiences in your area
             </p>
-            
-            <form 
+
+            <form
               onSubmit={handleSearch}
               className="relative max-w-2xl mx-auto flex bg-white rounded-lg overflow-hidden shadow-lg"
             >
@@ -83,7 +83,7 @@ function EventView() {
                 placeholder="Search for events..."
                 className="flex-grow px-4 py-3 focus:outline-none text-gray-900"
               />
-              <button 
+              <button
                 type="submit"
                 className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 transition-colors"
               >
@@ -92,12 +92,12 @@ function EventView() {
             </form>
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black opacity-30 z-0"></div>
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-black opacity-30 z-0"></div> */}
       </div>
 
       <div className="container mx-auto px-4 py-12">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          {searchTerm ? `Search Results for "${searchTerm}"` : 'Upcoming Events'}
+          {'Upcoming Events'}
         </h2>
 
         {error && (
@@ -109,13 +109,13 @@ function EventView() {
         {!loading && events.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-lg text-gray-600">
-              {searchTerm 
+              {searchTerm
                 ? `No events found matching "${searchTerm}"`
                 : 'No upcoming events at this time'}
             </p>
             {searchTerm && (
-              <button 
-                onClick={clearSearch} 
+              <button
+                onClick={clearSearch}
                 className="mt-4 btn-outline"
               >
                 Clear Search
@@ -129,8 +129,8 @@ function EventView() {
                 <EventCard key={event.id} event={event} />
               ))}
             </div>
-            
-            <Pagination 
+
+            <Pagination
               currentPage={page}
               totalPages={totalPages}
               onPageChange={setPage}
